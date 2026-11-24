@@ -4,6 +4,8 @@
 // uploaded as the single WebGL texture. Static geometry UVs point into the
 // atlas tiles below; plain-coloured quads sample the white tile so vertex
 // colour passes through unchanged. No network, no external images.
+// All speckle is seeded (makeRng with a fixed seed), so the atlas paints
+// identically on every load.
 
 var TEX = (function () {
   // Atlas layout: 4 columns x 4 rows of 128px tiles.
@@ -58,6 +60,10 @@ var TEX = (function () {
     cv.width = SIZE; cv.height = SIZE;
     var ctx = cv.getContext('2d');
 
+    // Seeded speckle: the atlas must paint identically on every load,
+    // so all randomness here comes from a fixed-seed PRNG, never Math.random.
+    var rng = makeRng(0xA71A5);
+
     // (0,0) white tile — plain vertex colour.
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, TILE, TILE);
@@ -90,7 +96,7 @@ var TEX = (function () {
     ctx.fillStyle = '#33333a'; ctx.fillRect(TILE, TILE * 2, TILE, TILE);
     ctx.fillStyle = '#26262b';
     for (var n = 0; n < 40; n++) {
-      ctx.fillRect(TILE + Math.random() * TILE, TILE * 2 + Math.random() * TILE, 3, 3);
+      ctx.fillRect(TILE + rng() * TILE, TILE * 2 + rng() * TILE, 3, 3);
     }
     ctx.fillStyle = '#d8c25a';
     ctx.fillRect(TILE + TILE / 2 - 2, TILE * 2 + 8, 4, 26);
@@ -118,7 +124,7 @@ var TEX = (function () {
     ctx.fillStyle = '#e6c98f'; ctx.fillRect(TILE * 2, TILE * 3, TILE, TILE);
     ctx.fillStyle = '#d9b878';
     for (var g = 0; g < 90; g++) {
-      ctx.fillRect(TILE * 2 + Math.random() * TILE, TILE * 3 + Math.random() * TILE, 2, 2);
+      ctx.fillRect(TILE * 2 + rng() * TILE, TILE * 3 + rng() * TILE, 2, 2);
     }
 
     return cv;

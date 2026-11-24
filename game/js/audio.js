@@ -1,6 +1,7 @@
 // audio.js — WebAudio for Solmar Bay: engine hum, 3 synth radio stations,
 // siren, crash thud and pickup chime. Everything starts only after a user
 // gesture (the title screen click), per autoplay policy.
+// Crash noise uses a fixed-seed PRNG so it sounds identical every run.
 
 var AudioSys = (function () {
   var ctx = null;
@@ -144,8 +145,10 @@ var AudioSys = (function () {
     var dur = 0.18 + intensity * 0.15;
     var buf = ctx.createBuffer(1, ctx.sampleRate * dur, ctx.sampleRate);
     var data = buf.getChannelData(0);
+    // Seeded noise: identical crash sound on every run (no Math.random).
+    var rng = makeRng(0xC4A57);
     for (var i = 0; i < data.length; i++) {
-      data[i] = (Math.random() * 2 - 1) * (1 - i / data.length);
+      data[i] = (rng() * 2 - 1) * (1 - i / data.length);
     }
     var src = ctx.createBufferSource();
     src.buffer = buf;

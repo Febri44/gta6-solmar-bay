@@ -3,6 +3,8 @@
 // Copies game/ into $MAKEFUN_OUTPUT_DIR and validates the result:
 // every referenced asset must exist, all script paths must be relative,
 // no network loads, no bare module specifiers. Runs in <10s on 1 CPU.
+// Output is fully deterministic: the manifest carries no timestamps,
+// so two runs produce byte-identical output directories.
 
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
@@ -79,12 +81,13 @@ function main(): void {
     }
   }
 
-  // 3. Manifest for the grader.
+  // 3. Manifest for the grader. Deliberately no timestamp: the manifest
+  // must be byte-identical on every run (run_deterministic), so no
+  // wall-clock values may appear in the output.
   const manifest = {
     name: 'solmar-bay',
     entry: 'index.html',
     files: files.map((f) => f.slice(OUT.length + 1)).sort(),
-    builtAt: new Date().toISOString(),
   };
   writeFileSync(join(OUT, 'manifest.json'), JSON.stringify(manifest, null, 2));
 
