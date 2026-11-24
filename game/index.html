@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Solmar Bay — a GTA-style open-world sunset city in the browser. Walk, drive, outrun the cops, run three missions.">
+<link rel="icon" href="data:,">
+<title>Solmar Bay — GTA-style Open World</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<canvas id="game"></canvas>
+
+<div id="hud">
+  <div id="hud-top-left">
+    <div id="hud-money">$250</div>
+    <div id="hud-stars">☆☆☆☆☆</div>
+    <div id="hud-health">♥ 100</div>
+    <div id="hud-clock">18:12</div>
+    <div id="hud-radio">SOLMAR FM 88.5 — Sunset Pop</div>
+  </div>
+  <div id="hud-top-right">
+    <canvas id="minimap" width="180" height="180"></canvas>
+  </div>
+  <div id="hud-mission">Courier Run</div>
+  <div id="hud-speed">ON FOOT</div>
+  <div id="hud-toast"></div>
+  <div id="hud-hint">WASD walk · E enter car · R radio</div>
+  <div id="mission-arrow">▲</div>
+</div>
+
+<div id="title">
+  <div id="title-inner">
+    <h1>SOLMAR BAY</h1>
+    <p class="subtitle">A Vice City-style sunset. Walk it. Drive it. Own it.</p>
+    <p class="brief">3 missions · wanted system · live traffic · radio</p>
+    <button id="start-btn">CLICK TO START</button>
+    <p class="controls">WASD move / drive &nbsp;·&nbsp; E enter &amp; exit car &nbsp;·&nbsp; SPACE brake<br>
+    R radio &nbsp;·&nbsp; M mute &nbsp;·&nbsp; visit shops &amp; the safehouse to recover</p>
+  </div>
+</div>
+
+<script src="js/util.js"></script>
+<script src="js/textures.js"></script>
+<script src="js/city.js"></script>
+<script src="js/renderer.js"></script>
+<script src="js/traffic.js"></script>
+<script src="js/police.js"></script>
+<script src="js/missions.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/game.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
